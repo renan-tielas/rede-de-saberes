@@ -11,7 +11,8 @@ try{
     await mongoose.connect(mongodb, {
         useNewUrlParser: true,
         useUnifiedTopology :true,
-        useCreateIndex: true
+        useCreateIndex: true,
+        useFindAndModify: false
     }); // nos da uma promessa
 
     console.log('MongoDb conectou ...');
