@@ -1,13 +1,13 @@
 const mongoose =require('mongoose');
 
-const PerfilSchema = mongoose.Schema({
+const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
     usuario: {
-        type: mongoose.Types.ObjectId,
-        referencia: 'usuario'
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'usuario'           // IMPORTANTE ser "ref"!! Não sei exatamente o que faz, mas acho que é herança, ou schemas relacionados que pode acessar
     },
 
     grupo: {
-        type:String,
+        type:String
     },
 
     site: {

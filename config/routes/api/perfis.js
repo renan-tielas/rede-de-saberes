@@ -19,16 +19,17 @@ const Usuario = require('../../../models/Usuario');
 router.get('/eu',autenticacao, async(req,res) => {
 
     try {
-        const perfil = await Perfil.findOne({usuario:req.usuario.id}).populate('usuario',['nome','avatar']);
+        const perfil = await Perfil.findOne({usuario:req.usuario.id}).populate('usuario'['nome','avatar']);
      //é o id do perfil, primeiro parametro so Perfil Schema
      //populado com as variáveis do usuario: nome e avatar
 
         if(!perfil) {
             return res.status(400).json({ msg: 'Não tem perfil para esse usuário'});           
-    return res.json(profile);
-    }} catch(err) {
+    
+    }
+    return res.json(perfil); } catch(err) {
     console.error(err.message);
-    res.status(500).send('Erro do servidor - perfis.js');
+    res.status(500).send('Erro do servidor - perfiis.js');
     }
 
 });
@@ -133,7 +134,9 @@ res.json(perfil);
 
 router.get('/', async (req,res) => {
     try {
-        const perfis = await Perfil.find().populate('usuario','nome','avatar');
+        // const perfis = await Perfil.find().populate('usuario',['nome','avatar']);
+        const perfis = await Perfil.find().populate('usuario', ['nome', 'avatar']);
+        
         res.json(perfis);
     } catch (err) {
         console.error(err.message);
@@ -141,6 +144,60 @@ router.get('/', async (req,res) => {
     }
 
 })
+
+
+
+// @route       GET api/perfis/usuario/:usuario_id
+// @desc        Pegar perfil pelo ID do usuario
+// @access      Publico
+
+router.get('/usuario/:usuario_id', async (req,res) => {
+    try {
+        
+        const perfil = await Perfil.findOne({usuario: req.params.usuario_id}).populate('usuario', ['nome', 'avatar']);
+        
+        if(!perfil){
+            return res.status(400).json({ msg: 'Não tem perfil para esse usuário' })
+
+
+        }
+
+        res.json(perfil);
+    } catch (err) {
+        console.error(err.message);
+        if(err.kind == 'ObjectId'){
+            res.send('Perfil não encontrado').status(400);
+        }
+        res.send('Erro no servidor - perfis').status(500);
+    }
+
+})
+
+
+
+// @route       DELETE api/perfis
+// @desc        Deletar perfil, usuário e posts
+// @access      Private
+
+router.delete('/',autenticacao,  async (req,res) => {
+    try {
+        // remove postagem  
+
+        // remove perfil
+        await Perfil.findOneAndRemove({usuario:req.usuario.id});
+
+
+        // remove usuário
+        await Usuario.findOneAndRemove({_id:req.usuario.id});
+
+        res.json({msg : "Usuario deletado"});
+    } catch (err) {
+        console.error(err.message);
+        res.send('Erro no servidor - perfis').status(500);
+    }
+});
+
+
 
 
 module.exports = router;
