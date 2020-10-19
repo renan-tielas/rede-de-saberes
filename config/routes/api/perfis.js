@@ -197,6 +197,213 @@ router.delete('/',autenticacao,  async (req,res) => {
     }
 });
 
+// @route       PUT api/perfis/experiencia
+// @desc        Adicionar experincia do perfil
+// @access      Private
+
+router.put('/experiencia', [autenticacao, [
+    check('titulo', 'Título é necessário').not().isEmpty(),
+    check('grupo', 'Grupo é necessário').not().isEmpty(),
+    check('desde', 'Data de início é necessária').not().isEmpty(),
+]], async (req,res) => {
+
+const errors = validationResult(req);
+if(!errors.isEmpty()){
+    return res.status(400).json({ errors: errors.array()});
+}
+
+    const {
+        titulo,
+        grupo,
+        local,
+        desde,
+        até,
+        atual,
+        descrição
+    }= req.body;
+
+    const novaXP = { // cria um objeto com os dados do usuario
+        titulo,
+        grupo,
+        local,
+        desde,
+        até,
+        atual,
+        descrição
+    }
+
+
+    try {
+
+        const perfil = await Perfil.findOne({ usuario : req.usuario.id});
+
+        perfil.experiencia.unshift(novaXP);
+        await perfil.save();
+
+        res.json(perfil);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erro no servidor - perfis PUT experienca');
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+// @route       DELETE api/perfis/experiencia/:exp_id
+// @desc        Deletar experiencia do perfil
+// @access      Private
+
+router.delete('/experiencia/:exp_id', autenticacao, async (req,res) => {
+
+
+    try {
+
+        const perfil = await Perfil.findOne({ usuario : req.usuario.id});
+        
+        //Pegar o índice de remoção
+        indiceRemocao = perfil.experiencia
+        .map(xp => xp.id)   //mapeia atraves das experiencias e pega os id
+        .indexOf(req.params.exp_id); // relaciona com o exp_id entrado na url request e pega seu indice
+        
+        
+        perfil.experiencia.splice(indiceRemocao,1);  // corta fora 1 item a partir do indice
+        
+        await perfil.save();
+
+        res.json(perfil);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erro no servidor - perfis DELETE experienca');
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+
+// @route       PUT api/perfis/saberes
+// @desc        Adicionar saberes do perfil
+// @access      Private
+
+router.put('/saberes', [autenticacao, [
+    check('escolas', 'Escola é necessário').not().isEmpty(),
+    check('aprofundamento', 'Nível de aprofundamento é necessário').not().isEmpty(),
+    check('temas', 'Tema é necessário').not().isEmpty(),
+    check('desde', 'Data de início é necessária').not().isEmpty(),
+]], async (req,res) => {
+
+const errors = validationResult(req);
+if(!errors.isEmpty()){
+    return res.status(400).json({ errors: errors.array()});
+}
+
+    const {
+        escolas,
+        aprofundamento,
+        temas,
+        desde,
+        até,
+        atual,
+        descrição
+    }= req.body;
+
+    const novoSABER = { // cria um objeto com os dados do usuario
+        escolas,
+        aprofundamento,
+        temas,
+        desde,
+        até,
+        atual,
+        descrição
+    }
+
+
+    try {
+
+        const perfil = await Perfil.findOne({ usuario : req.usuario.id});
+
+        perfil.saberes.unshift(novoSABER);
+        await perfil.save();
+
+        res.json(perfil);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erro no servidor - perfis PUT experienca');
+
+    }
+
+
+});
+
+
+
+// @route       DELETE api/perfis/saberes/:saber_id
+// @desc        Deletar saber do perfil
+// @access      Private
+
+router.delete('/saberes/:exp_id', autenticacao, async (req,res) => {
+// Problemihna : falta checar se o id é real, não está acontecendo nada caso não seja, acho;
+
+    try {
+
+        const perfil = await Perfil.findOne({ usuario : req.usuario.id});
+        
+        //Pegar o índice de remoção
+        indiceRemocao = perfil.saberes
+        .map(xp => xp.id)   //mapeia atraves das saberess e pega os id
+        .indexOf(req.params.saber_id); // relaciona com o exp_id entrado na url request e pega seu indice
+        
+        
+        perfil.saberes.splice(indiceRemocao,1);  // corta fora 1 item a partir do indice
+        
+        await perfil.save();
+
+        res.json(perfil);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erro no servidor - perfis DELETE experienca');
+
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
 
 
 

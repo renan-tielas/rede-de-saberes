@@ -42,7 +42,7 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
                 required: true
             },
             
-            companhia: {
+            grupo: {
                 type:String,
                 required: true
             },
