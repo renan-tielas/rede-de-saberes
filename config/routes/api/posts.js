@@ -278,6 +278,9 @@ router.delete('/comentarios/:id/:id_comentario', autenticacao, async (req,res) =
         res.status(500).send('Erro no servidor - DELETE Comentario')
         
     }
-})
+
+});
+
+
 
 module.exports = router;
