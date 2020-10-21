@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router();
 const autenticacao = require('../../../middleware/autenticacao');
+const request = require('request')
+const config = require('config')
+
 
 const { check, validationResult} = require('express-validator')
 
@@ -392,6 +395,43 @@ router.delete('/saberes/:exp_id', autenticacao, async (req,res) => {
         res.status(500).send('Erro no servidor - perfis DELETE experienca');
 
     }
+
+
+
+
+
+// @route       GET api/perfis/github/:nomeusuario
+// @desc        Pegar repositorios do Github
+// @access      Publico
+// NÃO ESTA FUNCIONANDO
+router.get('/github/:username', (req,res) =>{
+
+    try {
+        
+        const opcoes ={
+            uri: `https://api.github.com/users/${req.params.username}/repos?per_page=5&sort=created:asc&client_id=${config.get('githubClientId')}&client_secret=${config.get('githubSecret')}`,
+            method:'GET',
+            headers:{ 'user-agent':'node.js'}
+        };
+
+        request(opcoes, (error, response, body)=>{
+            if(error) console.error(error);
+            
+            if (response.statusCode !== 200){
+                res.status(404).json({msg:'Perfil github não encontrado'})
+            }
+            res.json(JSON.parse(body));
+        })
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send("Erro no servidor - GET github")
+    }
+
+
+
+
+
+})
 
 
 });

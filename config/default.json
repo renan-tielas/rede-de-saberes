@@ -1,5 +1,7 @@
 {
 
     "mongoURI": "mongodb+srv://renan:renan@redesociau.uuomw.mongodb.net/<dbname>?retryWrites=true&w=majority",
-    "jwtSecret":"meutokensecreto"
+    "jwtSecret":"meutokensecreto",
+    "githubClientId": "7aede9c0601ad862608f",
+    "githubSecret":"6e9a1b1d7cea843a7af5939baa7304a777c1e194"
 }
