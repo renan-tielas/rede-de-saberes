@@ -18,6 +18,7 @@ body {
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
+  
   color: #333;
 }
 
@@ -31,11 +32,13 @@ ul {
 }
 
 img {
+ 
   width: 100%;
 }
 
 /* Utilities */
 .container {
+  /* border: #28a745 solid 2px; */
   max-width: 1100px;
   margin: auto;
   overflow: hidden;
@@ -52,7 +55,7 @@ img {
 }
 
 .large {
-  font-size: 3rem;
+  font-size: 2.5rem;
   line-height: 1.2;
   margin-bottom: 1rem;
 }
@@ -226,7 +229,9 @@ img {
 
 /* Overlay */
 .dark-overlay {
-  background-color: rgba(0, 0, 0, 0.7);
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(255, 186, 82, 0.3); */
   position: absolute;
   top: 0;
   left: 0;
@@ -307,6 +312,7 @@ button {
   position: fixed;
   z-index: 1;
   width: 100%;
+
   top: 0;
   border-bottom: solid 1px var(--primary-color);
   opacity: 0.9;
@@ -314,12 +320,14 @@ button {
 
 .navbar ul {
   display: flex;
+  
 }
 
 .navbar a {
   color: #fff;
   padding: 0.45rem;
   margin: 0 0.25rem;
+  
 }
 
 .navbar a:hover {
@@ -328,13 +336,15 @@ button {
 
 .navbar .welcome span {
   margin-right: 0.6rem;
+  
 }
 
 /* Landing Page */
 .landing {
   position: relative;
-  background: url('./img/showcase.jpg') no-repeat center center/cover;
+  background: url('./img/circulo_sementes.jpg') no-repeat center center/cover;
   height: 100vh;
+  
 }
 
 .landing-inner {

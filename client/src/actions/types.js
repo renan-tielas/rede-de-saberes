@@ -1,0 +1,2 @@
+export const SET_ALERTA = 'SET_ALERTA'
+export const REMOVE_ALERTA ='REMOVE_ALERTA'
