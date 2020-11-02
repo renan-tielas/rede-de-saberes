@@ -1,9 +1,11 @@
 import React, { Fragment, useState } from 'react';
-import {Link} from 'react-router-dom'
-// import axios from 'axios';
+import {Link, Redirect} from 'react-router-dom';
+import { connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import {logiN} from '../../actions/autenticA'
 
 
-const Login = () => {
+const Login = ({logiN, isAuthenticated}) => {
   const [dadosFormulario, setDadosFormulario] = useState({
     email: '',
     senha: ''
@@ -19,31 +21,14 @@ const Login = () => {
 
     const onSubmit = async (inpt) =>{
         inpt.preventDefault();
-        console.log('Sucesso');
-        //     const novoUsuario = {
-        //         nome,
-        //         email,
-        //         senha
-        //     }
-
-        //     try {
-        //         const config = {
-        //             headers: {
-        //                 'Content-Type':'application/json'
-        //             }
-        //         }
-        //         const body = JSON.stringify(novoUsuario);
-
-        //         const res = await axios.post('/api/usuarios',body,config);
-        //         console.log(res.data)
-
-        //     } catch (err) {
-        //         console.error(err.response.data)
-
-
-        //  }
+        logiN(email, senha);
     };
     
+    //Redirecionar se estiver logado
+
+    if(isAuthenticated){
+      return <Redirect to="/painel"/>
+    }
 
   return (
     <Fragment>
@@ -82,7 +67,16 @@ const Login = () => {
   )
   };
 
-  
+  Login.propTypes = {
+    logiN: PropTypes.func.isRequired,
+    isAuthenticated:PropTypes.bool,
+  }
 
 
-export default Login;
+const mapStateToProps = estado => ({
+  isAuthenticated:estado.autentica.isAuthenticated
+});
+
+
+
+export default connect(mapStateToProps,{ logiN})(Login);

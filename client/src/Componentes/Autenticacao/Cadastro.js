@@ -1,9 +1,13 @@
 import React, { Fragment, useState } from 'react';
-import {Link} from 'react-router-dom'
+import { Link , Redirect} from 'react-router-dom';
+import { connect } from 'react-redux'; //conecta o componente ao redux
+import { setAlerta } from '../../actions/setAlerta';
+import { autenticA } from '../../actions/autenticA';
+import PropTypes from 'prop-types';
+
 // import axios from 'axios';
 
-
-const Cadastro = () => {
+const Cadastro = ({ setAlerta, autenticA, isAuthenticated }) => {
   const [dadosFormulario, setDadosFormulario] = useState({
     nome: '',
     email: '',
@@ -17,38 +21,22 @@ const Cadastro = () => {
     setDadosFormulario({
       ...dadosFormulario,
       [inpt.target.name]: inpt.target.value,
-    });// pegar os dados dos campos do formulario
+    }); // pegar os dados dos campos do formulario
 
-    const onSubmit = async (inpt) =>{
-        inpt.preventDefault();
-        if (senha !== senha2){
-            console.log('Senhas não são iguais');
-        } else{
-            console.log('Sucesso');
-        //     const novoUsuario = {
-        //         nome,
-        //         email,
-        //         senha
-        //     }
-
-        //     try {
-        //         const config = {
-        //             headers: {
-        //                 'Content-Type':'application/json'
-        //             }
-        //         }
-        //         const body = JSON.stringify(novoUsuario);
-
-        //         const res = await axios.post('/api/usuarios',body,config);
-        //         console.log(res.data)
-
-        //     } catch (err) {
-        //         console.error(err.response.data)
-
-
-        //  }
-    };
+  const onSubmit = async (inpt) => {
+    inpt.preventDefault();
+    if (senha !== senha2) {
+      setAlerta('Senhas não são iguais', 'danger', 3000);
+    } else {
+      autenticA({ nome, email, senha });
     }
+  };
+
+  //Redirecionar quando logar
+  if(isAuthenticated){
+    return <Redirect to="/painel"/>
+  }
+
 
   return (
     <Fragment>
@@ -56,7 +44,7 @@ const Cadastro = () => {
       <p className="lead">
         <i className="fas fa-user"></i> Crie sua conta
       </p>
-      <form className="form" onSubmit={inpt => onSubmit(inpt)}>
+      <form className="form" onSubmit={(inpt) => onSubmit(inpt)}>
         <div className="form-group">
           <input
             type="text"
@@ -64,7 +52,7 @@ const Cadastro = () => {
             name="nome"
             value={nome}
             onChange={(inpt) => onChange(inpt)}
-            required
+            // required
           />
         </div>
         <div className="form-group">
@@ -74,7 +62,7 @@ const Cadastro = () => {
             value={email}
             onChange={(inpt) => onChange(inpt)}
             name="email"
-            required
+            // required
           />
           <small className="form-text">
             Esse site usa Gravatar, então se você quer uma imagem de perfil, use
@@ -88,8 +76,8 @@ const Cadastro = () => {
             name="senha"
             value={senha}
             onChange={(inpt) => onChange(inpt)}
-            minLength="6"
-            required
+            // minLength="6"
+            // required
           />
         </div>
         <div className="form-group">
@@ -98,18 +86,28 @@ const Cadastro = () => {
             placeholder="Confirme a Senha"
             name="senha2"
             minLength="6"
-            value={senha2} 
-          onChange={ inpt => onChange(inpt)}
-            required
+            value={senha2}
+            onChange={(inpt) => onChange(inpt)}
+            // required
           />
         </div>
         <input type="submit" className="btn btn-primary" value="Cadastro" />
       </form>
       <p className="my-1">
-        Já tem uma conta?<Link to='/login'>Entre</Link>
+        Já tem uma conta?<Link to="/login">Entre</Link>
       </p>
     </Fragment>
   );
 };
 
-export default Cadastro;
+Cadastro.propTypes = {
+  setAlerta: PropTypes.func.isRequired,
+  autenticA: PropTypes.func.isRequired,
+  isAuthenticated:PropTypes.bool
+};
+const mapStateToProps = estado => ({
+  isAuthenticated:estado.autentica.isAuthenticated
+});
+
+
+export default connect(mapStateToProps, { setAlerta, autenticA })(Cadastro); //conecta o componente ao redux

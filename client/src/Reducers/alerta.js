@@ -1,11 +1,7 @@
 import { SET_ALERTA, REMOVE_ALERTA} from '../actions/types';
 
 
-const estadoInicial = [{
-    // id: 1,
-    // msg: 'Faça o login',
-    // alertType: 'success'
-}];
+const estadoInicial = [{}];
 
 export default function(estado = estadoInicial, acao){
 

@@ -1,9 +1,16 @@
 import React from 'react';
 import '../../App.css';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types'
 
 
-const Cheganca = () => {
+const Cheganca = ({isAuthenticated}) => {
+
+  if(isAuthenticated){
+    return <Redirect to='/painel'/>;
+  }
+
   return (
     <section className="landing">
       <div className="dark-overlay">
@@ -27,4 +34,13 @@ const Cheganca = () => {
   );
 };
 
-export default Cheganca;
+Cheganca.propTypes ={
+  isAuthenticated:PropTypes.bool,
+}
+
+const mapStateToProps = estado => ({
+  isAuthenticated : estado.autentica.isAuthenticated
+  });
+
+
+export default connect(mapStateToProps)(Cheganca);

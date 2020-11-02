@@ -12,7 +12,7 @@ const Perfil = require('../../../models/Perfil');
 
 const Usuario = require('../../../models/Usuario');
 
-
+// const Saber = require('../../../models/Saber');
 
 // @route       GET api/perfis/eu
 // @desc        pegar perfil do usuario atual
@@ -48,7 +48,7 @@ router.get('/eu',autenticacao, async(req,res) => {
 
 
 router.post('/',[autenticacao, [
-    check('ocupação', 'Ocupação é necessário').not().isEmpty(),
+    check('status', 'É necessário escolher entre: Pessoa, Grupo ou Rede').not().isEmpty(),
     check('habilidades','Habilidades são necessárias').not().isEmpty()
 ]], async(req,res) => {
 
@@ -60,10 +60,11 @@ router.post('/',[autenticacao, [
 
     const {
         grupo,
+        rede,
         site,
         local,
         biografia,
-        ocupação,
+        status,
         githubusername,
         habilidades,
         youtube,
@@ -76,17 +77,18 @@ router.post('/',[autenticacao, [
 const perfilCampos ={};
 perfilCampos.usuario = req.usuario.id;
 if(grupo) perfilCampos.grupo = grupo;
+if(rede) perfilCampos.rede = rede;
 if(site) perfilCampos.site = site;
 if(local) perfilCampos.local = local;
 if(biografia) perfilCampos.biografia = biografia;
-if(ocupação) perfilCampos.ocupação = ocupação;
+if(status) perfilCampos.status = status;
 if(githubusername) perfilCampos.githubusername = githubusername;
+
 if(habilidades){
-    perfilCampos.habilidades = habilidades.split(',').map(habilidades => habilidades.trim())
+    perfilCampos.habilidades = habilidades.toString().split(',').map(habilidades => habilidades.trim())
 }// corta os espaços após as palavras, 
 //para usar com entrada de arrays separada por virgula
 console.log(perfilCampos.habilidades);
-
 
 
 
@@ -118,9 +120,9 @@ perfil=new Perfil(perfilCampos);
 await perfil.save();
 res.json(perfil);
 
- }catch{
+ }catch(err){
 
-     console.error(error.message);
+     console.error(err.message);
      res.status(500).send('Erro servidor - perfis js')
 
 };
@@ -184,7 +186,10 @@ router.get('/usuario/:usuario_id', async (req,res) => {
 
 router.delete('/',autenticacao,  async (req,res) => {
     try {
-        // remove postagem  
+        // remove todas as postagens do usuario
+
+        // await Saber.deleteMany({usuario : req.usuario.id})
+
 
         // remove perfil
         await Perfil.findOneAndRemove({usuario:req.usuario.id});
@@ -206,7 +211,8 @@ router.delete('/',autenticacao,  async (req,res) => {
 
 router.put('/experiencia', [autenticacao, [
     check('titulo', 'Título é necessário').not().isEmpty(),
-    check('grupo', 'Grupo é necessário').not().isEmpty(),
+    check('local', 'Local é necessário').not().isEmpty(),
+    check('status', 'Pessoa, Grupo ou Rede é necessário').not().isEmpty(),
     check('desde', 'Data de início é necessária').not().isEmpty(),
 ]], async (req,res) => {
 
@@ -217,7 +223,10 @@ if(!errors.isEmpty()){
 
     const {
         titulo,
+        tema,
+        status,
         grupo,
+        rede,
         local,
         desde,
         até,
@@ -227,7 +236,10 @@ if(!errors.isEmpty()){
 
     const novaXP = { // cria um objeto com os dados do usuario
         titulo,
+        tema,
+        status,
         grupo,
+        rede,
         local,
         desde,
         até,
@@ -313,7 +325,8 @@ router.delete('/experiencia/:exp_id', autenticacao, async (req,res) => {
 // @access      Private
 
 router.put('/saberes', [autenticacao, [
-    check('escolas', 'Escola é necessário').not().isEmpty(),
+    check('titulos', 'Titulos são necessários').not().isEmpty(),
+    check('escolas', 'Escolas são necessário').not().isEmpty(),
     check('aprofundamento', 'Nível de aprofundamento é necessário').not().isEmpty(),
     check('temas', 'Tema é necessário').not().isEmpty(),
     check('desde', 'Data de início é necessária').not().isEmpty(),
@@ -325,6 +338,7 @@ if(!errors.isEmpty()){
 }
 
     const {
+        titulos,
         escolas,
         aprofundamento,
         temas,
@@ -335,6 +349,7 @@ if(!errors.isEmpty()){
     }= req.body;
 
     const novoSABER = { // cria um objeto com os dados do usuario
+        titulos,
         escolas,
         aprofundamento,
         temas,
@@ -357,7 +372,7 @@ if(!errors.isEmpty()){
 
     } catch (err) {
         console.error(err.message);
-        res.status(500).send('Erro no servidor - perfis PUT experienca');
+        res.status(500).send('Erro no servidor - perfis PUT saber');
 
     }
 

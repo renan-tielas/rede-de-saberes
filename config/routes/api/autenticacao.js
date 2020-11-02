@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const autenticacao = require('../../../middleware/autenticacao');
 const Usuario = require('../../../models/Usuario');
+
 const { check, validationResult } = require ('express-validator')
 const config = require('config');
 const JWT = require('jsonwebtoken');
@@ -17,6 +18,7 @@ router.get('/',autenticacao,async (req,res) =>{
 
     try{
         const usuario = await Usuario.findById(req.usuario.id).select('-senha');
+      
         res.json(usuario)
 
     } catch(err){

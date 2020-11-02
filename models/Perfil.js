@@ -10,6 +10,10 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
         type:String
     },
 
+    rede: {
+        type:String
+    },
+
     site: {
         type: String
     },
@@ -18,7 +22,7 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
         type: String
     },
 
-    ocupação: {
+    status: {
         type: String
     },
 
@@ -41,11 +45,22 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
                 type:String,
                 required: true
             },
-            
-            grupo: {
+            tema: {
                 type:String,
                 required: true
             },
+            status: {
+                type:String,
+                required: true
+            },
+            
+            grupo: {
+                type:String,
+            },
+            rede: {
+                type:String,
+            },
+            
 
             local: {
                 type:String,
@@ -67,7 +82,8 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
             },
 
             descrição: {
-                type: String
+                type: String,
+                required:true
             },
 
         }
@@ -78,6 +94,10 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
     saberes: [
         {
 
+            titulos: {
+                type: [String],
+                required: true
+            },
             escolas: {
                 type: [String],
                 required: true
@@ -108,7 +128,8 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
             },
 
             descrição: {
-                type: String
+                type: String,
+                required:true
             },
         }
     ],
@@ -123,7 +144,7 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
         facebook: {
             type: String
         },
-        gmail: {
+        email: {
             type: String
         },
         instagram: {
