@@ -12,6 +12,9 @@ const Navegacao = ({autentica:{isAuthenticated, loading},logouT}) => {
       <li><Link to='/perfis'>
        Perfis 
         </Link></li>
+        <li><Link to='/posts'>
+       Saberes
+        </Link></li>
       <li><Link to='/painel'>
         <i className='fas fa-user'/>{''} 
         <span className='hide-sm'> Painel </span> 

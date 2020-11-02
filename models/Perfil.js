@@ -154,6 +154,18 @@ const PerfilSchema = new mongoose.Schema({ //nao esquecer new!!
     data: {
         type : Date,
         default:Date.now
+    },
+
+
+
+
+    meta: {
+
+        inscricoes:{
+            saberes:[{}]
+
+
+        }
     }
 });
 

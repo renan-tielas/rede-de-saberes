@@ -1,24 +1,34 @@
-import { ERRO_PERFIL, PEGA_PERFIL, PEGA_PERFIS,CLEAR_PERFIL, ATUALIZA_PERFIL, PEGA_GITHUB } from "../actions/types";
+import { ERRO_PERFIL, PEGA_PERFIL, PEGA_PERFIS,CLEAR_PERFIL, ATUALIZA_PERFIL, PEGA_GITHUB, ATUALIZA_INSCRIÇÃO } from "../actions/types";
 
 const estadoInicial ={
     perfil:null, //perfil pessoal ou de amigos, singular
+    
     perfis:[], // lista de perfis
     repos:[], //respositorios github
     loading: true,
     error: {} 
 }
 
+// const { saberes}
 export default function(estado = estadoInicial, ApplicationCache) {
 
     const {type, payload} = ApplicationCache;
     switch(type){
         case PEGA_PERFIL:
         case ATUALIZA_PERFIL:
+        
         return{
             ...estado,
             perfil:payload,
             loading:false
         };
+        case ATUALIZA_INSCRIÇÃO:
+        return{
+            ...estado,
+            perfil:payload,
+            loading:false
+        };
+
 
         case PEGA_PERFIS:
         return{

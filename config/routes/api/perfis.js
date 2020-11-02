@@ -114,6 +114,7 @@ console.log(perfilCampos.habilidades);
         }
 
 
+
 //Criar perfil
 
 perfil=new Perfil(perfilCampos);
@@ -127,6 +128,9 @@ res.json(perfil);
 
 };
 });
+
+
+
 
 
 
@@ -274,6 +278,46 @@ if(!errors.isEmpty()){
 
 
 
+// @route       PUT api/perfis/
+// @desc        Adicionar INSCRICAO do perfil
+// @access      Private
+
+router.put('/', [autenticacao, [
+    check('inscricoes', 'Inscrição é necessário').not().isEmpty(),
+]], async (req,res) => {
+
+const errors = validationResult(req);
+if(!errors.isEmpty()){
+    return res.status(400).json({ errors: errors.array()});
+}
+
+    const {
+        inscricaoSaber
+    }= req.body;
+
+    const novaXP = { // cria um objeto com os dados do usuario
+        inscricaoSaber
+    }
+
+
+    try {
+
+        const perfil = await Perfil.findOne({ usuario : req.usuario.id});
+
+        perfil.meta.saberes.unshift(novaXP);
+        await perfil.save();
+
+        res.json(perfil);
+
+
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Erro no servidor - perfis PUT experienca');
+
+    }
+
+
+});
 
 
 

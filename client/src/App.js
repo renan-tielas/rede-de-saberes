@@ -17,8 +17,8 @@ import AddSaberes from './Componentes/Perfil_formulario/AddSaberes';
 import RotaPrivada from './Componentes/Routing/RotaPrivada';
 
 import Perfis from './Componentes/Perfis/Perfis';
-
 import Perfil from './Componentes/Perfil/Perfil';
+import Saberes from './Componentes/Saberes/Saberes';
 
 //Redux
 import {Provider} from 'react-redux'; //conecta react e redux botando tudo dentro do provider
@@ -58,6 +58,7 @@ const App = () => {
           <RotaPrivada exact path="/editar-perfil" component={EditarPerfil} />
           <RotaPrivada exact path="/adicionar-experiencia" component={AddExperiencia} />
           <RotaPrivada exact path="/adicionar-saberes" component={AddSaberes} />
+          <RotaPrivada exact path="/posts" component={Saberes} />
         </Switch>
       </section>
     </Fragment>
