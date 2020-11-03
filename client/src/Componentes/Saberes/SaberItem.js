@@ -5,24 +5,29 @@ import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import {addCurtida, deletaCurtida} from '../../actions/sabeR'
 import {deletaSaber} from '../../actions/sabeR'
+
 const SaberItem = ({
   autentica,
-  addCurtida, deletaCurtida,
+  addCurtida, deletaCurtida, deletaSaber,
   saber: { _id, texto, nome, avatar, usuario, curtidas, comentarios, data },
+  mostraAçoes
 }) => {
   return (
     <div className="post bg-white p-1 my-1">
       <div>
-        <a href="profile.html">
+        <Link to={`/perfis/usuario/${usuario}`}>
           <img className="round-img" src={avatar} alt="" />
           <h4>{nome}</h4>
-        </a>
+        </Link>
       </div>
       <div>
         <p className="my-1">{texto}</p>
         <p className="post-date">
           Publicado em <Moment format="DD/MM/YYYY">{data}</Moment>
         </p>
+
+      {/* {mostraAçoes && <Fragment>
+         */}
         <button onClick={e => addCurtida(_id)} type="button" className="btn btn-light">
           <i className="fas fa-thumbs-up"></i>{' '}
           <span>{curtidas.length>0 && (<span>{curtidas.length}</span>) }
@@ -40,10 +45,18 @@ const SaberItem = ({
             <i className="fas fa-times"></i>
           </button>
         )}
+
+        {/* </Fragment>} */}
+
+        
         {/* //compara o usuario com o dono do post e mostra o botao de deletar */}
       </div>
     </div>
   );
+};
+
+SaberItem.defaulProps = {
+  mostraAçoes: true
 };
 
 SaberItem.propTypes = {

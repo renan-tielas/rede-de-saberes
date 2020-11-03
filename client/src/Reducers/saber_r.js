@@ -1,4 +1,13 @@
-import { PEGA_SABERES, ERRO_SABER, ATUALIZA_CURTIDAS, DELETAR_SABER } from '../actions/types';
+import {
+  PEGA_SABER,
+  PEGA_SABERES,
+  ERRO_SABER,
+  ATUALIZA_CURTIDAS,
+  DELETA_SABER,
+  ADICIONA_SABER,
+  DELETA_COMENTARIO,
+  ADICIONA_COMENTARIO,
+} from '../actions/types';
 
 const estadoInicial = {
   saberes: [],
@@ -17,10 +26,23 @@ export default function (estado = estadoInicial, action) {
         saberes: payload,
         loading: false,
       };
-      case DELETAR_SABER:
+    ////COPIAR PARA FAZER ATUALIZA_INSCRIÇÃO inscrição !!!
+    case PEGA_SABER:
       return {
         ...estado,
-        saberes: estado.saberes.filter(saber=> saber._id !==payload),
+        saber: payload,
+        loading: false,
+      };
+    case ADICIONA_SABER:
+      return {
+        ...estado,
+        saberes: [payload, ...estado.saberes],
+        loading: false,
+      };
+    case DELETA_SABER:
+      return {
+        ...estado,
+        saberes: estado.saberes.filter((saber) => saber._id !== payload),
         //acha o saber que foi deletado e remove ele da UI
         loading: false,
       };
@@ -28,13 +50,15 @@ export default function (estado = estadoInicial, action) {
       return {
         ...estado,
         saberes: estado.saberes.map((saber) =>
-          saber._id === payload.id? {
+          saber._id === payload.id
+            ? {
                 //acha o saber certo
                 ...saber, //retorna o saber - post, daqui da pra fazer a inscrição com a id do saber
                 curtidas: payload.curtidas, // atualiza a curtida com o payload
               }
-            : saber),
-         //se não for o post certo, retorna ele normalmente
+            : saber
+        ),
+        //se não for o post certo, retorna ele normalmente
         loading: false,
       };
     //   case ATUALIZA_INSCRIÇÃO:
@@ -51,6 +75,24 @@ export default function (estado = estadoInicial, action) {
     //        //se não for o post certo, retorna ele normalmente
     //       loading: false,
     //     };
+
+    case ADICIONA_COMENTARIO:
+      return {
+        ...estado,
+        saber: {...estado.post, comentarios:payload},
+        loading: false,
+        
+      };
+      case DELETA_COMENTARIO:
+        return {
+          ...estado,
+          saber: {
+            ...estado.post,
+            comentarios:estado.saber.comentario.filter(
+              comentario=>comentario._id !==payload),
+              loading: false,
+              
+        }};
     case ERRO_SABER:
       return {
         ...estado,

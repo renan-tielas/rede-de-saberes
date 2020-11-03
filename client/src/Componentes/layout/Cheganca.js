@@ -15,8 +15,8 @@ const Cheganca = ({isAuthenticated}) => {
     <section className="landing">
       <div className="dark-overlay">
         <div className="landing-inner">
-          <h1 className="x-large">Rede de Saberes</h1>
-          <p className="lead">
+          <h1 className="x-large p-1" >Sementes de Saberes</h1>
+          <p className="lead p-1">
             Crie seu perfil na comunidade, compartilhe saberes, e articule com
             outras pessoas.
           </p>

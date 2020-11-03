@@ -47,8 +47,10 @@ const Navegacao = ({autentica:{isAuthenticated, loading},logouT}) => {
 
   return (
       <nav className="navbar bg-dark">
+        {/* fa-connectdevelop */}
+        {/* fab fa-raspberry-pi */}
         <h1>
-          <Link to='/'><i className="fas fa-code"></i> Rede de Saberes</Link>
+          <Link to='/'><i className="fab fa-raspberry-pi"></i> Sementes de Saberes</Link>
         </h1>
   {!loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>)}
       </nav>

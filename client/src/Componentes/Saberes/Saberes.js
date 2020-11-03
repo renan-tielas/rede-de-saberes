@@ -4,6 +4,9 @@ import {connect} from 'react-redux'
 import {pegaSaberes} from '../../actions/sabeR'
 import Roda from '../layout/Roda'
 import SaberItem from './SaberItem'
+import SaberFormulario from './SaberFormulario'
+
+
 
 const Saberes = ({pegaSaberes, saber_r:{saberes, loading}}) => {
 
@@ -18,7 +21,7 @@ const Saberes = ({pegaSaberes, saber_r:{saberes, loading}}) => {
             <p className="lead">
                 <i className="fas fa-user"></i> Bem vinde à comunidade!
             </p>
-            {/*Formulario de Saber*/}
+            <SaberFormulario/>
             <div className="posts">
                 {saberes.map(saber=>(
                     <SaberItem key={saber._id} saber={saber}/>

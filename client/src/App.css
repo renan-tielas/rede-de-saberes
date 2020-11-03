@@ -1,10 +1,13 @@
 /* Global Styles */
 :root {
-  --primary-color: #17a2b8;
+  /* --primary-color: #17a2b8; */
+  --primary-color: #944f0f;
   --dark-color: #343a40;
   --light-color: #f4f4f4;
+  /* --light-color: #e6ffed; */
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --laranja-color: #fc983b;
 }
 
 * {
@@ -49,9 +52,15 @@ img {
 
 /* Text Styles*/
 .x-large {
-  font-size: 4rem;
+  font-size: 3rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+  background-color: rgb(255, 250, 183);
+  background-color:var(--primary-color);
+  color:rgb(255, 255, 255);
+  border-radius: 8px;
+  /* text-decoration-color: #fc983b;
+  text-shadow: 10px #333; */
 }
 
 .large {
@@ -63,6 +72,21 @@ img {
 .lead {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  background-color: rgb(255, 255, 255);
+  color:var(--primary-color);
+  /* background-color:var(--primary-color); */
+  /* border:4px var(--primary-color) solid; */
+  border-radius: 8px;
+  font-weight: 550;
+  /* max-width: 50%; */
+  /* color: rgb(255, 255, 255); */
+
+  /* -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75); */
+-webkit-box-shadow: 10px 10px 72px 0px rgba(255,255,255,1);
+-moz-box-shadow: 10px 10px 72px 0px rgba(255,255,255,1);
+box-shadow: 10px 10px 72px 0px rgba(255,255,255,1);
 }
 
 .text-center {
@@ -132,11 +156,15 @@ img {
 .btn {
   display: inline-block;
   background: var(--light-color);
+  background: var(--primary-color);
   color: #333;
   padding: 0.4rem 1.3rem;
   font-size: 1rem;
+  font-weight: 600;
+  color:var(--light-color); ;
   border: none;
   cursor: pointer;
+  border-radius: 6px;
   margin-right: 0.5rem;
   transition: opacity 0.2s ease-in;
   outline: none;
@@ -153,17 +181,26 @@ img {
 
 .alert {
   padding: 0.8rem;
+  border-radius: 6px;
   margin: 1rem 0;
   opacity: 0.9;
   background: var(--light-color);
   color: #333;
 }
 
-.btn-primary,
+.btn-primary:{
+  background: var(--primary-color);
+  background: var(--laranja-color);
+  color: #fff;
+  border-color: var(--primary-color) ;
+  font-weight: 800;
+}
+
 .bg-primary,
 .badge-primary,
 .alert-primary {
   background: var(--primary-color);
+  background: var(--laranja-color);
   color: #fff;
 }
 
@@ -209,7 +246,12 @@ img {
 }
 
 .btn:hover {
-  opacity: 0.8;
+  opacity: 0.9;
+  /* transform-box: stroke; */
+  transform-style: preserve-3d;
+  transform: perspective(7.5cm) rotateX(-15deg) rotateY(-5deg);
+
+  /* transform: scale(1.1); */
 }
 
 .bg-light,
@@ -230,8 +272,8 @@ img {
 /* Overlay */
 .dark-overlay {
   /* background-color: rgba(0, 0, 0, 0.7); */
-  background-color: rgba(0, 0, 0, 0.3);
-  /* background-color: rgba(255, 186, 82, 0.3); */
+  background-color: rgba(0, 0, 0, 0.05);
+  /* background-color: rgba(255, 186, 82, 0.2); */
   position: absolute;
   top: 0;
   left: 0;
@@ -312,10 +354,12 @@ button {
   position: fixed;
   z-index: 1;
   width: 100%;
+  background-color: var(--laranja-color);
+  /* background-color: var(--primary-color); */
 
   top: 0;
-  border-bottom: solid 1px var(--primary-color);
-  opacity: 0.9;
+  /* border-bottom: solid 1px var(--light-color); */
+  /* opacity: 0.9; */
 }
 
 .navbar ul {
@@ -327,11 +371,13 @@ button {
   color: #fff;
   padding: 0.45rem;
   margin: 0 0.25rem;
+  font-weight: 700;
   
 }
 
 .navbar a:hover {
   color: var(--primary-color);
+  color: var(--dark-color);
 }
 
 .navbar .welcome span {
@@ -367,6 +413,7 @@ button {
   grid-gap: 2rem;
   padding: 1rem;
   line-height: 1.8;
+  border-radius: 6px;
   margin-bottom: 1rem;
 }
 
@@ -518,7 +565,8 @@ button {
   }
 
   .lead {
-    font-size: 1rem;
+    font-size: 0.8rem;
+    
   }
 
   /* Navbar */
